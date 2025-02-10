@@ -1,7 +1,9 @@
 class Api::V1::UsersController < ApplicationController
+  before_action :set_user, only: [:show, :update, :destroy]
+  
   # GET /api/v1/users/:id
   def show
-    render json: User.find(params[:id])
+    render json: @user
   end
 
   # POST /api/v1/users
@@ -15,9 +17,31 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
+  # PUT /api/v1/users/:id
+
+  def update
+    if @user.update(user_params)
+      render json: @user
+    else
+      render json: @user.errors, status: :unprocessable_entity
+    end
+  end
+
+  # DELETE /api/v1/users/:id
+
+  def destroy
+    @user.destroy
+
+    head 204
+  end
+
   private
 
   def user_params
     params.require(:user).permit(:email, :password)
+  end
+
+  def set_user
+    @user = User.find(params[:id])
   end
 end
