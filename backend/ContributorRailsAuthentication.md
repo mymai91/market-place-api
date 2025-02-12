@@ -28,20 +28,21 @@ JWT.decode(token, 'my_secret_key')
 ```
 class JsonWebToken
 
-  SECRET_KEY = Rails.application.secrets.secret_key_base.to_s
-
+  SECRET_KEY = Rails.application.credentials.secret_key_base
   def self.encode(payload, exp = 24.hours.from_now)
     payload[:exp] = exp.to_i
     JWT.encode(payload, secret_key)
   end
 
   def self.decode(token)
-    decode = JWT.decode(token, secret_key).first
+  decode = JWT.decode(token, secret_key).first
 
     # HashWithIndifferentAccess:
     # class provide by Rails which allows us to retrieve a value of a has with a symbol or string
     HashWithIndifferentAccess.new decoded
 
+  rescue JWT::DecodeError
+    nil
   end
 end
 ```
@@ -57,3 +58,31 @@ module Backend
   end
 end
 ```
+
+## Secret key
+
+### For development and test environments:
+
+Rails 7 automatically generates a `secret_key_base` in `config/credentials.yml.enc`
+
+You can edit it using
+
+```
+rails credentials:edit
+```
+
+This will open an editor where you can add any additional secrets you need. The `secret_key_base` will already be there `by default`.
+
+### For production environment:
+
+Set it as an environment variable:
+
+```
+RAILS_MASTER_KEY=your_master_key_here
+```
+
+### NOTE
+
+- Make sure you have the master key in `config/master.key`
+
+- Remember to never commit the master.key file to version control - it should be in your .gitignore.

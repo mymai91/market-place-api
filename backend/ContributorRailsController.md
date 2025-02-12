@@ -28,3 +28,9 @@ Rails.application.routes.draw do
   end
 end
 ```
+
+## Create Token controller
+
+```
+rails generate controller api::v1::tokens create
+```
