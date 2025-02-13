@@ -1,4 +1,5 @@
 class Api::V1::TokensController < ApplicationController
+  skip_before_action :authenticate_user!, only: [:create]
   def create
     @user = User.find_by_email(user_params[:email])
 

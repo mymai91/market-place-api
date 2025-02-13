@@ -59,6 +59,88 @@ module Backend
 end
 ```
 
+3. Create concern to get @current_user at application
+
+`app/controllers/concerns/authenticable.rb`
+
+```
+module Authenticable
+
+  def current_user
+
+    return @current_user if @current_user
+
+    header = request.headers['Authorization']
+
+    return nil if header.blank?
+
+    decode = JsonWebToken.decode(header)
+
+    @user = User.find(decode[:user_id]) rescue ActiveRecord::RecordNotFound
+  end
+end
+```
+
+4. Load current_user at application controller and check action
+
+Navigate to `app/controllers/application_controller.rb`
+
+```
+class ApplicationController < ActionController::API
+  include Authenticable
+
+  # Why before_action is Necessary:
+  # before_action :authenticate_user! runs the method before every request to enforce authentication.
+  # Without before_action, current_user will only be called if explicitly used in an action
+
+  before_action :authenticate_user!
+
+  private
+
+  # method with ! mean: method will rails exceptions or has side effect
+  # authenticate_user! has sideeffect because "It renders a response and halts the request"
+  def authenticate_user!
+    unless current_user
+      render json: { error: 'Not Authorized'}, status: :unauthorized
+    end
+  end
+end
+```
+
+5. Skip Authenticate
+
+```
+class AuthController < ApplicationController
+  skip_before_action :authenticate_user!, only: [:login, :register]
+
+  def login
+    # public route
+  end
+
+  def register
+    # public route
+  end
+end
+```
+
+```
+
+
+```
+
+class AuthController < ApplicationController
+skip_before_action :authenticate_user!, only: [:login, :register]
+
+def login # public route
+end
+
+def register # public route
+end
+end
+
+```
+
+
 ## Secret key
 
 ### For development and test environments:
@@ -68,7 +150,9 @@ Rails 7 automatically generates a `secret_key_base` in `config/credentials.yml.e
 You can edit it using
 
 ```
+
 rails credentials:edit
+
 ```
 
 This will open an editor where you can add any additional secrets you need. The `secret_key_base` will already be there `by default`.
@@ -78,7 +162,9 @@ This will open an editor where you can add any additional secrets you need. The 
 Set it as an environment variable:
 
 ```
+
 RAILS_MASTER_KEY=your_master_key_here
+
 ```
 
 ### NOTE
@@ -86,3 +172,5 @@ RAILS_MASTER_KEY=your_master_key_here
 - Make sure you have the master key in `config/master.key`
 
 - Remember to never commit the master.key file to version control - it should be in your .gitignore.
+
+```

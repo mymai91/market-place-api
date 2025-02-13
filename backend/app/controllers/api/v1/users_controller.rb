@@ -1,4 +1,5 @@
 class Api::V1::UsersController < ApplicationController
+  skip_before_action :authenticate_user!, only: [:show, :create, :update, :destroy]
   before_action :set_user, only: [:show, :update, :destroy]
   
   # GET /api/v1/users/:id
