@@ -7,11 +7,11 @@ class JsonWebToken
   end
 
   def self.decode(token)
-  decode = JWT.decode(token, SECRET_KEY).first
+    decode = JWT.decode(token, SECRET_KEY).first
 
     # HashWithIndifferentAccess: 
     # class provide by Rails which allows us to retrieve a value of a has with a symbol or string
-    HashWithIndifferentAccess.new decoded
+    HashWithIndifferentAccess.new decode
 
   rescue JWT::DecodeError
     nil
