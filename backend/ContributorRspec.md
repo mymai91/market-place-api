@@ -48,3 +48,54 @@ Load the support file in rails_helper.rb:
 # spec/rails_helper.rb
 require 'support/factory_bot'
 ```
+
+## Step 3: Create a factory
+
+Generate the factor
+
+```
+rails generate factory_bot:model User
+```
+
+Edit the factory:
+
+```
+# spec/factories/users.rb
+FactoryBot.define do
+  factory :user do
+    name { Faker::Name.name }
+    email { Faker::Internet.email }
+    password { 'password123' }
+  end
+end
+```
+
+### Run test
+
+run all tests:
+
+```
+rspec
+```
+
+To run specific test:
+
+```
+rspec spec/models/user_spec.rb
+```
+
+### Generate Rspec code
+
+Use RSpec Generators (Automatic)
+
+```
+rails g rspec:model User
+```
+
+I will create
+
+```
+  create  spec/models/user_spec.rb
+
+  create    spec/factories/users.rb
+```
