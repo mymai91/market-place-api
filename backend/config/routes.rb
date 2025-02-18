@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
       resources :tokens, only: [:create]
 
-      resources :products, only: [:show]
+      resources :products, only: [:show, :create]
     end
   end
 end
