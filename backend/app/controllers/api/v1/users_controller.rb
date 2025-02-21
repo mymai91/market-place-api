@@ -4,7 +4,7 @@ class Api::V1::UsersController < ApplicationController
   before_action :check_owner, only: [:update, :destroy]
   # GET /api/v1/users/:id
   def show
-    render json: @user
+    render json: UserSerializer.new(@user).serializable_hash.to_json
   end
 
   # POST /api/v1/users
@@ -12,9 +12,9 @@ class Api::V1::UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      render json: @user, status: :created
+      render json: UserSerializer.new(@user).serializable_hash.to_json, status: :created
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render json: {errors: @user.errors}, status: :unprocessable_entity
     end
   end
 
@@ -33,7 +33,7 @@ class Api::V1::UsersController < ApplicationController
   def destroy
     @user.destroy
 
-    head 204
+    head :no_content
   end
 
   private

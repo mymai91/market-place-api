@@ -1,6 +1,10 @@
 ### Serialize JSON:API
 
-`bundle add fast_jsonapi`
+```
+bundle add jsonapi-serializer
+
+bundle install
+```
 
 The JSON:API documentation gives us some rules to follow regarding the formatting of the JSON document.
 
