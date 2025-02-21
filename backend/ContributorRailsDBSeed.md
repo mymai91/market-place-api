@@ -1,12 +1,15 @@
+# Open DB seed
+
+navigate seeds.rb
+
+```
 User.delete_all
 
 5.times do
   user = User.create!(email: Faker::Internet.email, password: 'password123')
 
   puts "Created new user #{user.email}"
-
-  3.times do
-    product = Product.create!(title: Faker::Commerce.product_name, price: rand(10 ..100), user: user)
-  end
 end
 
+
+```
