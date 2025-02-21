@@ -84,7 +84,7 @@ To run specific test:
 rspec spec/models/user_spec.rb
 ```
 
-### Generate Rspec code
+### Generate Model Rspec code
 
 Use RSpec Generators (Automatic)
 
@@ -98,4 +98,57 @@ I will create
   create  spec/models/user_spec.rb
 
   create    spec/factories/users.rb
+```
+
+### Generate controller rspec
+
+```
+rails g rspec:controller Api::V1::Users
+```
+
+### Run the Test
+
+Run all rspec test in your website
+
+```
+bundle exec rspec
+```
+
+Run only this specific file, use:
+
+```
+bundle exec rspec spec/controllers/api/v1/users_controller_spec.rb
+```
+
+## Add shoulda-matchers to your Gemfile:
+
+```
+group :test do
+  gem 'shoulda-matchers', '~> 5.0'
+end
+```
+
+run
+
+```
+bundle install
+```
+
+2. Configure shoulda-matchers in your rails_helper.rb:
+
+Add the following to spec/rails_helper.rb after require 'rspec/rails':
+
+```
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    with.test_framework :rspec
+    with.library :rails
+  end
+end
+```
+
+Test
+
+```
+it { should belong_to(:user) }
 ```
