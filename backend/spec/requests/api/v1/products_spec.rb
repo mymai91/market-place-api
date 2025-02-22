@@ -46,10 +46,14 @@ RSpec.describe "Api::V1::Products", type: :request do
       product.reload # Ensure database updates
 
 
-      json_response = JSON.parse(response.body)
+      json_response = JSON.parse(response.body, symbolize_names: true)
 
-      expect(json_response['data']['attributes']['title']).to eq(valid_product[:title])
-      expect(json_response['data']['attributes']['price'].to_f).to eq(valid_product[:price])
+      # .dig deeply nested hashes without raising an error if a key is missing. 
+      # json_response.dig(:data, :attributes, :title) === json_response['data']['attributes']['title']  
+      # benifit of using dig is that it will not raise an error if a key is missing.
+
+      expect(json_response.dig(:data, :attributes, :title)).to eq(valid_product[:title])
+      expect(json_response.dig(:data, :attributes, :price).to_f).to eq(valid_product[:price])
     end
 
     it 'prevents a non-owner from updating the product' do
