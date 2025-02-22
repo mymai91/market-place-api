@@ -3,4 +3,5 @@ class UserSerializer
 
   set_type :user
   attributes :email, :created_at
+  has_many :products
 end

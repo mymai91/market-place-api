@@ -48,6 +48,7 @@ RSpec.describe "Api::V1::Products", type: :request do
 
       json_response = JSON.parse(response.body, symbolize_names: true)
 
+      debugger
       # .dig deeply nested hashes without raising an error if a key is missing. 
       # json_response.dig(:data, :attributes, :title) === json_response['data']['attributes']['title']  
       # benifit of using dig is that it will not raise an error if a key is missing.
