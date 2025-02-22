@@ -125,3 +125,9 @@ RSpec.describe "Api::V1::Users", type: :request do
   end
 end
 ```
+
+# Generate
+
+```
+RAILS_ENV=test bundle exec rails rswag:specs:swaggerize
+```
