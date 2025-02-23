@@ -1,7 +1,12 @@
 class Api::V1::ProductsController < ApplicationController
   before_action :find_product, only: [:show, :update, :destroy]
-  skip_before_action :authenticate_user!, only: [:show]
+  skip_before_action :authenticate_user!, only: [:show, :index]
   before_action :check_owner, only: [:update, :destroy]
+
+  def index
+    @products = Product.search(search_params)
+    render json: ProductSerializer.new(@products).serializable_hash.to_json, status: :ok
+  end
 
   def show
     render json: ProductSerializer.new(@product).serializable_hash.to_json
@@ -52,5 +57,9 @@ class Api::V1::ProductsController < ApplicationController
 
   def product_params
     params.require(:product).permit(:title, :price, :published)
+  end
+
+  def search_params
+    params.permit(:keyword, :min_price, :max_price, :recent, :product_ids)
   end
 end
