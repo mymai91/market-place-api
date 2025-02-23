@@ -48,6 +48,8 @@ group :development, :test do
   gem 'faker'  # For generating fake data
   gem 'shoulda-matchers', '~> 5.0'
   gem 'rswag-specs'
+
+  gem 'byebug'
 end
 
 group :development do

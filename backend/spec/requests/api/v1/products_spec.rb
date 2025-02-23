@@ -45,10 +45,8 @@ RSpec.describe "Api::V1::Products", type: :request do
 
       product.reload # Ensure database updates
 
-
       json_response = JSON.parse(response.body, symbolize_names: true)
 
-      debugger
       # .dig deeply nested hashes without raising an error if a key is missing. 
       # json_response.dig(:data, :attributes, :title) === json_response['data']['attributes']['title']  
       # benifit of using dig is that it will not raise an error if a key is missing.
@@ -77,6 +75,27 @@ RSpec.describe "Api::V1::Products", type: :request do
       delete api_v1_product_path(product), headers: un_owner_headers, as: :json
 
       expect(response).to have_http_status(:forbidden)
+    end
+  end
+
+  describe "GET /api/v1/products" do
+
+    let!(:tv_product_1) {create(:product, title: 'Plasma Samsung tv', price: 1000)}
+    let!(:tv_product_2) {create(:product, title: 'Plasma Sony tv', price: 500)}  
+    let!(:tv_product_3) {create(:product, title: 'Plasma Samsung 4K tv', price: 1300)}
+    let(:laptop_product) {create(:product, :laptop)}
+    let(:phone_product) {create(:product, :phone)}
+
+    it 'returns all products' do
+      params = { 
+        keyword: "tv", 
+        min_price: 1000,
+        format: :json  # Explicitly set the format
+      }
+      
+      get api_v1_products_path, params: params, headers: owner_headers
+      
+      expect(response).to have_http_status(:ok)
     end
   end
 end

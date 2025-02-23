@@ -70,6 +70,34 @@ FactoryBot.define do
 end
 ```
 
+```
+FactoryBot.define do
+  factory :product do
+    sequence(:title) { |n| "Product #{n}" }
+    price { rand(50..10_000).to_f }
+    published { true }
+    association :user # ✅ Ensures every product has a user
+
+    trait :tv do
+      title { "Super TV" }
+    end
+
+    trait :laptop do
+      title { "Gaming Laptop" }
+    end
+  end
+end
+```
+
+#### In the test case
+
+```
+  let(:tv_product_1) {create(:product, title: 'Plasma Samsung tv')}
+  let(:tv_product_2) {create(:product, title: 'Plasma Sony tv')}
+  let(:laptop_product) {create(:product, :laptop)}
+  let(:phone_product) {create(:product, :phone)}
+```
+
 ### Run test
 
 run all tests:
