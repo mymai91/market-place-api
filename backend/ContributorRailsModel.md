@@ -28,7 +28,7 @@ class CreateUsers < ActiveRecord::Migration[7.1]
 end
 ```
 
-Use Index for `email`
+- Use Index for `email`
 
 Adding an index on the email column in the users table serves two main purposes:
 
@@ -44,6 +44,8 @@ Without an index, the database performs a full table scan, meaning it checks eve
 With an indexed email column, the database can quickly find the email, making lookups much faster.
 
 _2._ Ensuring Uniqueness
+
+- By default id will be save at BigInt and JSONAPI::Serializer will always serialize it as a string.
 
 4. Run migrate
 

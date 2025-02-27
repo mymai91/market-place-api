@@ -1,0 +1,38 @@
+{
+  "data": {
+    "id": "591",
+    "type": "order",
+    "attributes": { "total": "82.42" },
+    "relationships": {
+      "user": { "data": { "id": "1373", "type": "user" } },
+      "products": {
+        "data": [
+          { "id": "1100", "type": "product" },
+          { "id": "1101", "type": "product" }
+        ]
+      }
+    }
+  },
+  "included": [
+    {
+      "id": "1100",
+      "type": "product",
+      "attributes": {
+        "title": "Sleek Steel Clock",
+        "price": "79.74",
+        "published": true
+      },
+      "relationships": { "user": { "data": { "id": "1384", "type": "user" } } }
+    },
+    {
+      "id": "1101",
+      "type": "product",
+      "attributes": {
+        "title": "Ergonomic Aluminum Watch",
+        "price": "2.68",
+        "published": true
+      },
+      "relationships": { "user": { "data": { "id": "1385", "type": "user" } } }
+    }
+  ]
+}
