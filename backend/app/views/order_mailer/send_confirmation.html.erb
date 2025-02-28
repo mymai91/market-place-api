@@ -1,0 +1,16 @@
+<h1>Order Confirmation</h1>
+
+<p>Hi <%= @user.email %>,</p>
+
+<p>Thank you for your order.</p>
+
+<p>Order ID: <%= @order.id%></p>
+<p>You ordered <%= @products.count %></p>
+
+<ul>
+  <% @products.each do |product| %>
+    <li><%= product.title %> - <%= format_currency(product.price) %></li>
+  <% end %>
+</ul>
+
+<p>We will notify you once your order is shipped.</p>
