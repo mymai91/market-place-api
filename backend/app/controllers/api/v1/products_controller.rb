@@ -4,7 +4,7 @@ class Api::V1::ProductsController < ApplicationController
   before_action :check_owner, only: [:update, :destroy]
 
   def index
-    @products = Product.search(search_params)
+    @products = Product.page(params[:page]).per(params[:per_page]).search(search_params)
     render json: ProductSerializer.new(@products).serializable_hash.to_json, status: :ok
   end
 

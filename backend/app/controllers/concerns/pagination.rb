@@ -1,0 +1,4 @@
+module Pagination
+  protected
+
+end
