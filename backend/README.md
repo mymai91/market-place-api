@@ -23,6 +23,4 @@ Things you may want to cover:
 
 - ...
 
-https://github.com/madeindjs/api_on_rails
 
-madeindjs/market_place_api_6.git
