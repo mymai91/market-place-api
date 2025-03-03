@@ -3,6 +3,7 @@ FactoryBot.define do
     title { Faker::Commerce.product_name }
     price { Faker::Commerce.price }
     published { Faker::Boolean.boolean }
+    quantity {Faker::Number.number(digits: 2)}
     association :user
 
     trait :tivi do
