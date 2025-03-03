@@ -128,7 +128,7 @@ You can only verify if a given password matches the digest
 Generate
 
 ```
-rails g model Product title:string price:decimal published:boolean user:belongs_to
+rails g model Product title:string price:decimal published:boolean user:references
 ```
 
 We used the `belongs_to` type for the attribute user. This is a shortcut that will create an user_id column of type int and also add a foreign key to the users.id field, and create an index on the products table, The index will be on the user_id column improve the performance of queries that filter or join on user_id
